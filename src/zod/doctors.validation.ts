@@ -13,17 +13,22 @@ export const createDoctorZodSchema = z.object({
     qualification: z.string().min(3, "Qualification must be at least 3 characters long"),
     currentWorkingPlace: z.string().min(3, "Current Working Place must be at least 3 characters long"),
     designation: z.string().min(2, "Designation must be at least 2 characters long"),
+    specialties: z.array(z.string()).min(1, "At least one specialty is required"),
+    profilePhoto: z.any().optional(),
 });
 
 export const updateDoctorZodSchema = z.object({
     name: z.string().optional(),
     profilePhoto: z.string().optional(),
     contactNumber: z.string().optional(),
+    address: z.string().optional(),
     registrationNumber: z.string().optional(),
     experience: z.number().optional(),
     gender: z.string().optional(),
-    apointmentFee: z.number().optional(),
+    appointmentFee: z.number().optional(),
     qualification: z.string().optional(),
     currentWorkingPlace: z.string().optional(),
     designation: z.string().optional(),
+    specialties: z.array(z.string()).optional(),
+    removeSpecialties: z.array(z.string()).optional(),
 });
