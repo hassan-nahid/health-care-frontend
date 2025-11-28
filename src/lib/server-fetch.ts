@@ -1,0 +1,35 @@
+import { getCookie } from "@/services/auth/tokenHandlers";
+
+const BACKEND_API_URL = process.env.NEXT_PUBLIC_API || 'http://localhost:5000/api/v1';
+
+const serverFetchHelper = async (endpoint: string, options: RequestInit) : Promise<Response> => {
+    const {headers, ...restOptions} = options;
+    const accessToken = await getCookie('accessToken');
+    const response = await fetch(`${BACKEND_API_URL}${endpoint}`, {
+        headers: {
+            ...headers,
+            Cookie: accessToken ? `accessToken=${accessToken}` : ''
+        },
+        credentials: 'include',
+        ...restOptions
+    })
+    return response
+}
+
+export const serverFetch = {
+    get: async(endpoint: string, options: RequestInit = {}): Promise<Response> => {
+        return serverFetchHelper(endpoint, { method: 'GET', ...options });
+    },
+    post: async(endpoint: string, options: RequestInit = {}): Promise<Response> => {
+        return serverFetchHelper(endpoint, { method: 'POST', ...options });
+    },
+    put: async(endpoint: string, options: RequestInit = {}): Promise<Response> => {
+        return serverFetchHelper(endpoint, { method: 'PUT', ...options });
+    },
+    delete: async(endpoint: string, options: RequestInit = {}): Promise<Response> => {
+        return serverFetchHelper(endpoint, { method: 'DELETE', ...options });
+    },
+    patch: async(endpoint: string, options: RequestInit = {}): Promise<Response> => {
+        return serverFetchHelper(endpoint, { method: 'PATCH', ...options });
+    },
+}
