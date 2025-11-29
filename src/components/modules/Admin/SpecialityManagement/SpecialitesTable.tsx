@@ -5,7 +5,7 @@ import { useState, useTransition } from "react";
 import { toast } from "sonner";
 import { ISpeciality } from "@/types/specialites.interface";
 import { deleteSpeciality } from "@/services/admin/SpecialitesManagement";
-import DeleteConirmationDialog from "@/components/shared/DeleteConirmationDialog";
+import DeleteConirmationDialog from "@/components/shared/DeleteConfirmationDialog";
 import { SpecialitesColumns } from "./SpecialitesColumns";
 
 interface SpecialityTableProps {

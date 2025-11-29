@@ -8,7 +8,7 @@ import DoctorFormDialog from "./DoctorFormDialog";
 import DoctorViewDetailDialog from "./DoctorViewDetailDialog";
 import { ISpeciality } from "@/types/specialites.interface";
 import { doctorsColumns } from "./DoctorsColumns";
-import DeleteConirmationDialog from "@/components/shared/DeleteConirmationDialog";
+import DeleteConirmationDialog from "@/components/shared/DeleteConfirmationDialog";
 import { softDeleteDoctor } from "@/services/admin/doctorManagement";
 
 interface DoctorsTableProps {

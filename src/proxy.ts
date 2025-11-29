@@ -3,12 +3,30 @@ import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 import { getDefaultDashboardRoute, getRouteOwner, isAuthRoute, UserRole } from './lib/auth-untils';
 import { deleteCookie, getCookie } from './services/auth/tokenHandlers';
+import { getUserInfo } from './services/auth/getUserInfo';
+import { getNewAccessToken } from './services/auth/auth.service';
 
 
 
 // This function can be marked `async` if using `await` inside
 export async function proxy(request: NextRequest) {
     const pathname = request.nextUrl.pathname;
+
+    const hasTokenRefreshedParam = request.nextUrl.searchParams.get('tokenRefreshed');
+
+    if(hasTokenRefreshedParam){
+        const url = request.nextUrl.clone();
+        url.searchParams.delete('tokenRefreshed');
+        return NextResponse.redirect(url);
+    }
+
+    const tokenRefreshResult = await getNewAccessToken();
+
+    if(tokenRefreshResult?.tokenRefreshed){
+        const url = request.nextUrl.clone();
+        url.searchParams.set('tokenRefreshed', 'true');
+        return NextResponse.redirect(url);
+    }
 
     const accessToken = await getCookie("accessToken") || null;
 
@@ -25,6 +43,21 @@ export async function proxy(request: NextRequest) {
         }
 
         userRole = verifiedToken.role;
+    }
+
+    if(accessToken){
+        const userInfo = await getUserInfo();
+        if(userInfo.needPasswordChange){
+            if(pathname !== '/reset-password'){
+                const resetPasswordUrl = new URL('/reset-password', request.url);
+                resetPasswordUrl.searchParams.set("redirect", pathname);
+                return NextResponse.redirect(resetPasswordUrl);
+            }
+            return NextResponse.next();
+        }
+        if(userInfo && !userInfo.needPasswordChange && pathname === '/reset-password'){
+            return NextResponse.redirect(new URL(getDefaultDashboardRoute(userRole as UserRole), request.url));
+        }
     }
 
     const routerOwner = getRouteOwner(pathname);

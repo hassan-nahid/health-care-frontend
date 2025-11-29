@@ -22,7 +22,7 @@ import { toast } from "sonner";
 import SpecialtyMultiSelect from "./SpecialtyMultiSelect";
 import { ISpeciality } from "@/types/specialites.interface";
 import { useSpecialtySelection } from "@/hooks/specilaityHooks/useSpecilatiySelection";
-import InputFiledError from "@/components/shared/InputFiledError";
+import InputFiledError from "@/components/shared/InputFieldError";
 
 interface IDoctorFormDialogProps {
   open: boolean;

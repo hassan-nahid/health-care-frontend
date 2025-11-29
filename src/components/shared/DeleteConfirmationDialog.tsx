@@ -10,7 +10,7 @@ interface DeleteConirmationDialogProps {
     onConfirm: () => void;
 }
 
-const DeleteConirmationDialog = ({ open, onOpenChange, title, description, itemName, isDeleting, onConfirm }: DeleteConirmationDialogProps) => {
+const DeleteConfirmationDialog = ({ open, onOpenChange, title, description, itemName, isDeleting, onConfirm }: DeleteConirmationDialogProps) => {
     return (
         <AlertDialog open={open} onOpenChange={onOpenChange}>
             <AlertDialogContent>
@@ -39,4 +39,4 @@ const DeleteConirmationDialog = ({ open, onOpenChange, title, description, itemN
         </AlertDialog>
     );
 }
-export default DeleteConirmationDialog
+export default DeleteConfirmationDialog

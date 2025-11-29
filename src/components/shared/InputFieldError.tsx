@@ -6,7 +6,7 @@ interface FiledErrorProps {
     state: IInputErrorState;
 }
 
-const InputFiledError = ({ fieldName, state }: FiledErrorProps) => {
+const InputFieldError = ({ fieldName, state }: FiledErrorProps) => {
     if (getInputFieldError(fieldName, state)) {
         return (
             <FieldDescription className="text-red-600">
@@ -17,4 +17,4 @@ const InputFiledError = ({ fieldName, state }: FiledErrorProps) => {
     return null;
 
 }
-export default InputFiledError
+export default InputFieldError
